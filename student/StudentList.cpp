@@ -26,6 +26,7 @@ class StudentList{
         void print();
         bool verifyEmail(const string& email);
         StudentNode<T>* searchStudent(string _dpi); 
+        StudentNode<T>* searchByCarne(string _carne);
         
         StudentList();
         ~StudentList();
@@ -58,10 +59,20 @@ ErrorList *errorList = new ErrorList();
 template <typename T> 
 void StudentList<T>::addStudent(T _carne, T _dpi, T _name, T _career, T _password, T _credits, T _age, T _email){
     StudentNode<T> *newNode = new StudentNode<T>(_carne, _dpi, _name, _career, _password, _credits, _age, _email, 0);
-    
-    if(_carne.length() != 9 || _dpi.length() != 13 /* || verifyEmail(_email) == false */){
-        errorList->insert("Especificacion no cumplida", "Error en carnet | DPI | patron en correo electronico");
-        cout << "\t\t\t\t\t    error - Error en carnet | DPI | patron en correo electronico" << endl;
+    string errorText = "";
+
+    if(_carne.length() != 9 || _dpi.length() != 13 || verifyEmail(_email) == false ){
+        if(_carne.length() != 9){
+            errorText += "Carnet no cumple con los digitos establecidos, ";
+        }
+        if(_dpi.length() != 13){
+            errorText += "DPI no cumple con los digitos establecidos, ";
+        }
+        if(verifyEmail(_email) == false){
+            errorText += "Email no cumple con la expresion regular. ";
+        }
+        errorList->insert("Estudiante", errorText);
+        cout << "\t\t\t\t\t    error - " << errorText << endl;
     } else{
         if(this->first == NULL){
             this->first = newNode;
@@ -95,10 +106,29 @@ StudentNode<T>* StudentList<T>::searchStudent(string _dpi){
             temp = temp->next;
         } while(temp != first);
     } else{
-        cout << "Lista está vacía" << endl;
+        cout << "\t\t\t\t\t    error - Ningun estudiante registrado con el DPI " << _dpi << endl;
     }
     return NULL;
 }
+
+//------------------------------------------------------------- SEARCH STUDENT BY CARNE
+
+template <typename T>
+StudentNode<T>* StudentList<T>::searchByCarne(string _carne){
+    StudentNode<T>* temp = this->first;
+    if(temp != NULL){
+        do{
+            if(temp->carne == _carne){
+                return temp;
+            } 
+            temp = temp->next;
+        } while(temp != first);
+    } else{
+        cout << "\t\t\t\t\t    error - Ningun estudiante registrado con el DPI " << _carne << endl;
+    }
+    return NULL;    
+}
+
 
 //------------------------------------------------------------- DELETE STUDENT
 

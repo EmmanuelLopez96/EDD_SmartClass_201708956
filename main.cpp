@@ -16,7 +16,49 @@ using namespace std;
 StudentList<string> *cdll;
 StudentGraph<string> *sg;
 
+//------------------------------------------------------------------------------------- HOMEWORK
+//------------------------------------------------------------- READ HOMEWORK FILE
 
+void readHomework(string path){
+    ifstream file(path);
+    string line;
+    char delimiter = ',';
+    getline(file, line);
+    while(getline(file, line)){
+        stringstream stream(line);
+        string month, day, hour, carne, name,  description, course, date, state;
+
+        getline(stream, month, delimiter);
+        getline(stream, day, delimiter);
+        getline(stream, hour, delimiter);
+        getline(stream, carne, delimiter);
+        getline(stream, name, delimiter);
+        getline(stream, description, delimiter);
+        getline(stream, course, delimiter);
+        getline(stream, date, delimiter);
+        getline(stream, state, delimiter);
+
+        string errorText = "";
+
+        if(cdll->searchByCarne(carne) == NULL || (stoi(hour) < 8 || stoi(hour) > 16) || (stoi(month) < 7 || stoi(month) > 11) || (stoi(day) < 1 || stoi(day) > 30)){
+            if(cdll->searchByCarne(carne) == NULL){
+                errorText += "Ningun estudiante corresponde a " + carne + ", ";
+            }
+            if(stoi(hour) < 8 || stoi(hour) > 16){
+                errorText += "Hora fuera del rango establecido, ";
+            }
+            if(stoi(month) < 7 || stoi(month) > 11){
+                errorText += "Mes fuera del rango establecido, ";
+            }
+            if(stoi(day) < 1 || stoi(day) > 30){
+                errorText += "Dia fuera del rango establecido. ";
+            }
+            errorList->insert("Tarea", errorText);
+        }
+    }
+}
+
+//------------------------------------------------------------------------------------- STUDENTS
 //------------------------------------------------------------- READ STUDENTS FILE
 
 void readStudents(string path){
@@ -37,8 +79,7 @@ void readStudents(string path){
         getline(stream, age, delimiter);
         getline(stream, email, delimiter);
 
-        cout << carnet << " " << dpi << " " << name << " " << career << " " << email << " " << password << " " << credits << " " << age << endl;
-        cdll->addStudent(carnet, dpi, name, career, email, password, credits, age);
+        cdll->addStudent(carnet, dpi, name, career, password, credits, age, email);
     }
 }
 
@@ -203,7 +244,7 @@ void showReports(){
         switch (option){
         case 1:
             cdll->print();
-            sg->generateGraph(&*cdll);
+            sg->generateGraph(&*cdll);            
             break;
         case 2:
             cout << "Muestra la linealizacion de tareas" << endl;
@@ -278,7 +319,6 @@ void editInformation(int selected, string str){
     } while(option != 4);
 }
 
-
 //------------------------------------------------------------- SELECT MENU
 
 void manualInput(){
@@ -345,6 +385,7 @@ int main(){
         case 2:
             cout << "Ingrese la ruta del archivo *.cvs" << endl;
             cin >> homeworkPath;
+            readHomework(homeworkPath);
             break;
         case 3:
             manualInput();
@@ -362,17 +403,3 @@ int main(){
     } while (option != 5);
     return 0;
 }
-
-/*
-    cdll = new StudentList<string>();
-
-    cdll->addStudent("207089560", "1234567891230", "Jose Joses Lopez", "Ingenieria", "ingelover", "50", "24", "inge@gmail.com");  
-    cdll->addStudent("201700000", "1234567891231", "Juanito sEstrada", "Ingenieria", "inover", "50", "240", "inge@gmail.com");  
-    cdll->addStudent("201711111", "1234567891232", "Leidy Ramesn", "Ingenieria", "ingeler", "50", "2", "inge@gmail.com");  
-    cdll->addStudent("201733333", "1234567891233", "Jonh Wick", "Ingenieria", "ingelov", "5", "4", "inge@gmail.com");  
-
-    cdll->deleteStudent("1234567891230");
-
-    StudentGraph<string> *sg = new StudentGraph<string>();
-    sg->generateGraph(&*cdll);
-*/
