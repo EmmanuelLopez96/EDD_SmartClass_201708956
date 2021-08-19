@@ -43,10 +43,10 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
 
     file_out.open(filename, std::ios_base::out);
     if(!file_out.is_open()){
-        cout << "Error al abrir el archivo: " << filename << '\n';
+        cout << "\t\t\t\t\t    error - Error al abrir el archivo " << filename << endl;
     }else{
         file_out << acum << endl;
-        cout << "La escritura fue un exito" << endl;
+        cout << "\t\t\t\t\t    nota - Grafo de estudiantes creado correctamente" << endl;
     }
 
     string cmd = "dot -Tpng students.dot -o students.png";

@@ -243,7 +243,7 @@ void showReports(){
 
         switch (option){
         case 1:
-            cdll->print();
+            //cdll->print();
             sg->generateGraph(&*cdll);            
             break;
         case 2:
