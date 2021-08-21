@@ -49,7 +49,7 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
         cout << "\t\t\t\t\t    nota - Grafo de estudiantes creado correctamente" << endl;
     }
 
-    string cmd = "dot -Tpng students.dot -o students.png";
+    string cmd = "dot -Tpdf students.dot -o students.pdf";
     system(cmd.c_str());    
 }
 

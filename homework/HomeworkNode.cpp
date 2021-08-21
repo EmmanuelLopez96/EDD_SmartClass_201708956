@@ -1,9 +1,7 @@
 #ifndef STUDENTH_H
 #define STUDENTH_H
 
-#include <iostream>
-
-using namespace std;
+#include <stdlib.h>
 
 template <typename T>
 class HomeworkNode{
@@ -22,6 +20,9 @@ class HomeworkNode{
         T course;
         T date;
         T state;
+
+        HomeworkNode *next;
+        HomeworkNode *prev;
 };
 
 template <typename T>
@@ -35,6 +36,9 @@ HomeworkNode<T>::HomeworkNode(T _month, T _day, T _hour, T _carne, T _name, T _d
     this->course = _course;
     this->date = _date;
     this->state = _state;
+
+    this->next = NULL;
+    this->prev = NULL;
 }
 
 template <typename T>

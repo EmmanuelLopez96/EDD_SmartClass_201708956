@@ -11,8 +11,10 @@
 
 #include "./student/StudentList.cpp"
 #include "./graph/StudentGraph.cpp"
+#include "./homework/HomeworkNode.cpp"
 
 using namespace std;
+
 StudentList<string> *cdll;
 StudentGraph<string> *sg;
 
@@ -20,10 +22,28 @@ StudentGraph<string> *sg;
 //------------------------------------------------------------- READ HOMEWORK FILE
 
 void readHomework(string path){
+    int rows = 9;
+    int cols = 30;
+    int depth = 5;
+    int cont = 0;
+    HomeworkNode<string> *hw[rows][cols][depth];
+    HomeworkNode<string> *vector[rows*cols*depth];
+
+    //------------------------------------------------------------- 3D ARRAY
+    for(int i=0; i<rows; i++){
+        for(int j=0; j<cols; j++){
+            for(int k=0; k<depth; k++){
+                hw[i][j][k] = new HomeworkNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", 0);
+            }
+        }
+    }
+
+    //------------------------------------------------------------- READ FILE
     ifstream file(path);
     string line;
     char delimiter = ',';
     getline(file, line);
+    
     while(getline(file, line)){
         stringstream stream(line);
         string month, day, hour, carne, name,  description, course, date, state;
@@ -54,6 +74,19 @@ void readHomework(string path){
                 errorText += "Dia fuera del rango establecido. ";
             }
             errorList->insert("Tarea", errorText);
+        } else{
+            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new HomeworkNode<string>(month, day, hour, carne, name, description, course, date, state, 0);
+        }
+    }
+
+    //------------------------------------------------------------- ROW-MAJOR (i * cols + j) * depth + k;
+
+    for(int i=0; i<rows; i++){
+        for(int j=0; j<cols; j++){
+            for(int k=0; k<depth; k++){
+                int position = (i * cols + j) * depth + k;
+                vector[position] = hw[i][j][k];
+            }
         }
     }
 }
