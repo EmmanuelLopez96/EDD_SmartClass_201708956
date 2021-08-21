@@ -11,12 +11,13 @@
 
 #include "./student/StudentList.cpp"
 #include "./graph/StudentGraph.cpp"
-#include "./homework/HomeworkNode.cpp"
+#include "./task/TaskList.cpp"
 
 using namespace std;
 
 StudentList<string> *cdll;
 StudentGraph<string> *sg;
+TaskList<string> *tkl;
 
 //------------------------------------------------------------------------------------- HOMEWORK
 //------------------------------------------------------------- READ HOMEWORK FILE
@@ -26,14 +27,15 @@ void readHomework(string path){
     int cols = 30;
     int depth = 5;
     int cont = 0;
-    HomeworkNode<string> *hw[rows][cols][depth];
-    HomeworkNode<string> *vector[rows*cols*depth];
+    int length = rows * cols * depth;
+    TaskNode<string> *hw[rows][cols][depth];
+    TaskNode<string> *vector[rows*cols*depth];
 
     //------------------------------------------------------------- 3D ARRAY
     for(int i=0; i<rows; i++){
         for(int j=0; j<cols; j++){
             for(int k=0; k<depth; k++){
-                hw[i][j][k] = new HomeworkNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1");
+                hw[i][j][k] = new TaskNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1");
             }
         }
     }
@@ -75,7 +77,7 @@ void readHomework(string path){
             }
             errorList->insert("Tarea", errorText);
         } else{
-            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new HomeworkNode<string>(month, day, hour, carne, name, description, course, date, state);
+            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new TaskNode<string>(month, day, hour, carne, name, description, course, date, state);
         }
     }
 
@@ -87,6 +89,12 @@ void readHomework(string path){
                 int position = (i * cols + j) * depth + k;
                 vector[position] = hw[i][j][k];
             }
+        }
+    }
+
+    for(int i=0; i<length; i++){
+        if(vector[i]->name != "-1"){
+            tkl->addTask(vector[i]->month, vector[i]->day, vector[i]->hour, vector[i]->carne, vector[i]->name, vector[i]->description, vector[i]->course, vector[i]->date, vector[i]->state);
         }
     }
 }
@@ -394,6 +402,7 @@ int main(){
     int option;
     string studentsPath, homeworkPath;
     cdll = new StudentList<string>();
+    tkl = new TaskList<string>();
     
     do{
         cout << "\n\n\n********************************************" << endl;

@@ -1,15 +1,15 @@
-#ifndef STUDENTH_H
-#define STUDENTH_H
+#ifndef TSKNODE_H
+#define TSKNODE_H
 
 #include <stdlib.h>
 
 template <typename T>
-class HomeworkNode{
+class TaskNode{
     private:
         
     public:
-        HomeworkNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state);
-        ~HomeworkNode();
+        TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state);
+        ~TaskNode();
 
         T month;
         T day;
@@ -21,12 +21,12 @@ class HomeworkNode{
         T date;
         T state;
 
-        HomeworkNode *next;
-        HomeworkNode *prev;
+        TaskNode *next;
+        TaskNode *prev;
 };
 
 template <typename T>
-HomeworkNode<T>::HomeworkNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state){
+TaskNode<T>::TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state){
     this->month = _month;
     this->day = _day;
     this->hour = _hour;
@@ -42,7 +42,7 @@ HomeworkNode<T>::HomeworkNode(T _month, T _day, T _hour, T _carne, T _name, T _d
 }
 
 template <typename T>
-HomeworkNode<T>::~HomeworkNode(){
+TaskNode<T>::~TaskNode(){
 }
 
 #endif
