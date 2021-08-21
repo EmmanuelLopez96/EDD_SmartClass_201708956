@@ -11,13 +11,14 @@
 
 #include "./student/StudentList.cpp"
 #include "./graph/StudentGraph.cpp"
-#include "./task/TaskList.cpp"
+#include "./graph/TaskGraph.cpp"
 
 using namespace std;
 
 StudentList<string> *cdll;
 StudentGraph<string> *sg;
 TaskList<string> *tkl;
+TaskGraph<string> *tg;
 
 //------------------------------------------------------------------------------------- HOMEWORK
 //------------------------------------------------------------- READ HOMEWORK FILE
@@ -35,7 +36,7 @@ void readHomework(string path){
     for(int i=0; i<rows; i++){
         for(int j=0; j<cols; j++){
             for(int k=0; k<depth; k++){
-                hw[i][j][k] = new TaskNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1");
+                hw[i][j][k] = new TaskNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "0");
             }
         }
     }
@@ -77,7 +78,7 @@ void readHomework(string path){
             }
             errorList->insert("Tarea", errorText);
         } else{
-            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new TaskNode<string>(month, day, hour, carne, name, description, course, date, state);
+            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new TaskNode<string>(month, day, hour, carne, name, description, course, date, state, "0");
         }
     }
 
@@ -93,9 +94,7 @@ void readHomework(string path){
     }
 
     for(int i=0; i<length; i++){
-        if(vector[i]->name != "-1"){
-            tkl->addTask(vector[i]->month, vector[i]->day, vector[i]->hour, vector[i]->carne, vector[i]->name, vector[i]->description, vector[i]->course, vector[i]->date, vector[i]->state);
-        }
+            tkl->addTask(vector[i]->month, vector[i]->day, vector[i]->hour, vector[i]->carne, vector[i]->name, vector[i]->description, vector[i]->course, vector[i]->date, vector[i]->state, to_string(i));
     }
 }
 
@@ -284,11 +283,10 @@ void showReports(){
 
         switch (option){
         case 1:
-            //cdll->print();
             sg->generateGraph(&*cdll);            
             break;
         case 2:
-            cout << "Muestra la linealizacion de tareas" << endl;
+            tg->generateGraph(&*tkl);
             break;
         case 3:
             cdll->printErrors();

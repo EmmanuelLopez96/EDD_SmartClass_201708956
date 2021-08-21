@@ -28,14 +28,24 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
 
     StudentNode<T> *tmp = gcdll->first;
     while(tmp->next != gcdll->first){
-        string hex = dirToString(&*tmp); 
-        nodo += "\"" + hex + "\"" + "[label=\"" + valrToString(tmp->name) + "\n" + valrToString(tmp->carne) + "\"];\n";
-        enlace += "\"" +  dirToString(&*tmp) + "\" -> \"" + dirToString(&*(tmp->next)) + "\"[dir=\"both\"];\n";
+        string hex = dirToString(&*tmp);         
+        nodo += "\"" + hex + "\"" + "[label=\"" + valrToString(tmp->carne) + "\n" + valrToString(tmp->dpi) + "\n" + valrToString(tmp->name) +
+        "\n" + valrToString(tmp->career) + "\n" + valrToString(tmp->email) + "\n" + valrToString(tmp->password) + "\n" + valrToString(tmp->age) +
+        "\n" + valrToString(tmp->credits) +"\"];\n";
+        string currLink = dirToString(&*tmp);
+        string nextLink = dirToString(&*(tmp->next));
+        enlace += "\"" + currLink + "\" -> \"" + nextLink + "\"[dir=\"right\"];\n";
+        enlace += "\"" + nextLink + "\" -> \"" + currLink + "\"[dir=\"left\"];\n";
         tmp = tmp->next;
     }
     
-    nodo += "\"" + dirToString(&*tmp) + "\"[label=\"" + valrToString(tmp->name) + "\n" + valrToString(tmp->carne) + "\"];\n";
-    enlace += "\"" +  dirToString(&*tmp) + "\" -> \"" + dirToString(&*(tmp->next)) + "\"[dir=\"both\"];\n";
+    nodo += "\"" + dirToString(&*tmp) + "\"[label=\"" + valrToString(tmp->carne) + "\n" + valrToString(tmp->dpi) + "\n" + valrToString(tmp->name) +
+        "\n" + valrToString(tmp->career) + "\n" + valrToString(tmp->email) + "\n" + valrToString(tmp->password) + "\n" + valrToString(tmp->age) +
+        "\n" + valrToString(tmp->credits) +"\"];\n";
+    string currLink = dirToString(&*tmp);
+    string nextLink = dirToString(&*(tmp->next));
+    enlace += "\"" + currLink + "\" -> \"" + nextLink + "\"[dir=\"right\"];\n";
+    enlace += "\"" +  nextLink + "\" -> \"" + currLink + "\"[dir=\"left\"];\n";
     acum += nodo + enlace + "\n}\n";
 
     string filename("students.dot");

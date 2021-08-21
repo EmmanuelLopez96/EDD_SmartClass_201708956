@@ -8,7 +8,7 @@ class TaskNode{
     private:
         
     public:
-        TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state);
+        TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state, T _id);
         ~TaskNode();
 
         T month;
@@ -20,13 +20,14 @@ class TaskNode{
         T course;
         T date;
         T state;
+        T id;
 
         TaskNode *next;
         TaskNode *prev;
 };
 
 template <typename T>
-TaskNode<T>::TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state){
+TaskNode<T>::TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _description, T _course, T _date, T _state, T _id){
     this->month = _month;
     this->day = _day;
     this->hour = _hour;
@@ -36,6 +37,7 @@ TaskNode<T>::TaskNode(T _month, T _day, T _hour, T _carne, T _name, T _descripti
     this->course = _course;
     this->date = _date;
     this->state = _state;
+    this->id = _id;
 
     this->next = NULL;
     this->prev = NULL;
