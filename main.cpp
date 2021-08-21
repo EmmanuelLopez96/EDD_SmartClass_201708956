@@ -33,7 +33,7 @@ void readHomework(string path){
     for(int i=0; i<rows; i++){
         for(int j=0; j<cols; j++){
             for(int k=0; k<depth; k++){
-                hw[i][j][k] = new HomeworkNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", 0);
+                hw[i][j][k] = new HomeworkNode<string>("-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1");
             }
         }
     }
@@ -75,7 +75,7 @@ void readHomework(string path){
             }
             errorList->insert("Tarea", errorText);
         } else{
-            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new HomeworkNode<string>(month, day, hour, carne, name, description, course, date, state, 0);
+            hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new HomeworkNode<string>(month, day, hour, carne, name, description, course, date, state);
         }
     }
 
