@@ -13,7 +13,10 @@ class TaskList{
         
         void addTask(T _month, T _day, T _hour, T _carne, T _name, T _descritpion, T _course, T _date, T _state, T _id);
         void printTask();
-        
+        void deleteTask(string _position);
+        TaskNode<T>* test(string _position);
+        TaskNode<T>* modifyTest(string _position);
+
         TaskList();
         ~TaskList();
 };
@@ -55,4 +58,61 @@ void TaskList<T>::printTask(){
         temp = temp->next;
     } 
     cout << "\n\n\n--- final ---" << endl;    
+}
+
+template <typename T>
+TaskNode<T>* TaskList<T>::test(string _position){
+    TaskNode<T> *temp = this->first;
+    while(temp != NULL){
+        if(temp->id == _position && temp->name == "-1"){
+            return temp;
+        } 
+        temp = temp->next;
+    }
+    return NULL;
+}
+
+template <typename T>
+TaskNode<T>* TaskList<T>::modifyTest(string _position){
+    TaskNode<T> *temp = this->first;
+    while(temp != NULL){
+        if(temp->id == _position && temp->name != "-1"){
+            return temp;
+        } 
+        temp = temp->next;
+    }
+    return NULL;
+}
+
+template <typename T>
+void TaskList<T>::deleteTask(string _position){
+    TaskNode<T> *remove = modifyTest(_position);
+    TaskNode<T> *temp = this->first;
+    TaskNode<T> *temp2 = this->last;
+
+    char option;
+    cout << "Esta seguro de eliminar la tarea " << remove->id << "(y/n) ";
+    cin >> option;
+
+    if(remove != NULL){
+        if(option == 'y'){
+            if(remove == temp){
+                this->first = remove->next;
+                remove->next = NULL;
+                remove->next->prev = NULL;
+            } else if(remove == temp2){
+                this->last = remove->prev;
+                remove->prev->next = NULL;
+                remove->prev = NULL;
+            } else{
+                remove->prev->next = remove->next;
+                remove->next->prev = remove->prev; 
+                remove->prev = NULL;
+                remove->next = NULL;
+            }
+            cout << "\t\t\t\t\t    nota - Tarea " << _position << " eliminada exitosamente" << endl;
+        }       
+    } else{
+        cout << "\t\t\t\t\t    error - Ninguna tarea almacenada en el indice " << _position << endl;
+    }
 }

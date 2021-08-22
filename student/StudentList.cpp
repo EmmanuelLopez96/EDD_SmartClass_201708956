@@ -139,7 +139,7 @@ void StudentList<T>::deleteStudent(string dpi){
     StudentNode<T> *temp2 = this->last;
 
     char option;
-    cout << "Esta seguro de eliminar al estudiante " << remove->name << " (y/n) ";
+    cout << "Esta seguro de eliminar al estudiante " << remove->name << " (y/n): ";
     cin >> option;
 
     if(remove != NULL){

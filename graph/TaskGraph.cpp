@@ -70,7 +70,7 @@ void TaskGraph<T>::generateGraph(TaskList<T> *gtkl){
         cout << "\t\t\t\t\t    nota - Grafo de tareas creado correctamente" << endl;
     }
 
-    string cmd = "dot -Tpdf tasks.dot -o tasks.pdf";
+    string cmd = "dot -Tsvg tasks.dot -o tasks.svg";
     system(cmd.c_str());
 }
 
