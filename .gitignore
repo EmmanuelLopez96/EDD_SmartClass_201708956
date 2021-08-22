@@ -1,6 +1,4 @@
 /.vscode
 main.exe
-students.dot
-students.pdf
-tasks.dot
-tasks.pdf
+*.dot
+*.svg
