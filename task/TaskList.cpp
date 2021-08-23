@@ -12,7 +12,7 @@ class TaskList{
         TaskNode<T> *last;
         
         void addTask(T _month, T _day, T _hour, T _carne, T _name, T _descritpion, T _course, T _date, T _state, T _id);
-        void printTask();
+        string printTask();
         void deleteTask(string _position);
         TaskNode<T>* test(string _position);
         TaskNode<T>* modifyTest(string _position);
@@ -50,14 +50,26 @@ void TaskList<T>::addTask(T _month, T _day, T _hour, T _carne, T _name, T _descr
 }
 
 template <typename T>
-void TaskList<T>::printTask(){
+string TaskList<T>::printTask(){
     TaskNode<T> *temp = this->first;
-    cout << "\n\n\n--- inicio ---" << endl;
+    string finalText = "";
+    string delimiter = "/";
     while(temp != NULL){
-        cout << temp->name << " - " << temp->date << " <-> ";
+        if(temp->name != "-1"){
+            vector<string> words{};
+            finalText += "\t¿element type=\"task\"?\n";
+            finalText += "\t\t¿item Carnet = \"" + temp->carne + "\" $?\n";
+            finalText += "\t\t¿item Nombre = \"" + temp->name + "\" $?\n";
+            finalText += "\t\t¿item Descripcion = \"" + temp->description + "\" $?\n";
+            finalText += "\t\t¿item Materia = \"" + temp->course + "\" $?\n";
+            finalText += "\t\t¿item Fecha = \"" + temp->date + "\" $?\n";
+            finalText += "\t\t¿item Hora = \"" + temp->hour + "\" $?\n";
+            finalText += "\t\t¿item Estado = \"" + temp->state + "\" $  ?\n";
+            finalText += "\t¿$element?\n"; 
+        }
         temp = temp->next;
     } 
-    cout << "\n\n\n--- final ---" << endl;    
+    return finalText;
 }
 
 template <typename T>

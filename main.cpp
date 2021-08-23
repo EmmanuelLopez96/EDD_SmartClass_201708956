@@ -21,6 +21,22 @@ TaskList<string> *tkl;
 TaskGraph<string> *tg;
 ErrorGraph *errg;
 
+//------------------------------------------------------------------------------------- WRITE FINAL CODE
+
+void writeCode(){
+    ofstream code;
+    code.open("final code.txt", ios::out);
+    if(code.fail()){
+        cout << "\t\t\t\t\t    error - No se pudo abrir el archivo" << endl;
+    } else{
+        code << "¿Elements?\n";
+        code << cdll->print();
+        code << tkl->printTask();
+        code << "¿Elements?\n";
+        code.close();
+    }
+}
+
 //------------------------------------------------------------------------------------- HOMEWORK
 //------------------------------------------------------------- READ HOMEWORK FILE
 
@@ -506,7 +522,7 @@ void showReports(){
         }
             break;
         case 6:
-                cout << "codigo de salida";
+                writeCode();
                 break;
         case 7:
             break;

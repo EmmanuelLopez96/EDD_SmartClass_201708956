@@ -24,7 +24,7 @@ class StudentList{
         void addStudent(T _carne, T _dpi, T _name, T _career, T _password, T _credits, T _age, T _email);
         void deleteStudent(string _dpi);
         void printErrors();
-        void print();
+        string print();
         bool verifyEmail(const string& email);
         ErrorList *errorGraph();
         StudentNode<T>* searchStudent(string _dpi); 
@@ -166,18 +166,28 @@ void StudentList<T>::deleteStudent(string dpi){
 //------------------------------------------------------------- PRINT LIST
 
 template <typename T>
-void StudentList<T>::print(){
+string StudentList<T>::print(){
     StudentNode<T> *temp = this->first;
     if(temp != NULL){
-        cout << "\n\n\n--- inicio ---" << endl;
+        string finalText = "";
         do{
-            cout << temp->carne << " - " << temp->dpi << " - " << temp->name << " - " << temp->career << " - " << temp->email << " - " << temp->password << " - " << temp->credits << " - " << temp->age << endl;
+            finalText += "\t¿element type=\"user\"?\n";
+            finalText += "\t\t¿item Carnet = \"" + temp->carne + "\" $?\n";
+            finalText += "\t\t¿item DPI = \"" + temp->dpi + "\" $?\n";
+            finalText += "\t\t¿item Nombre = \"" + temp->name + "\" $?\n";
+            finalText += "\t\t¿item Carrera = \"" + temp->career + "\" $?\n";
+            finalText += "\t\t¿item Password = \"" + temp->password + "\" $?\n";
+            finalText += "\t\t¿item Creditos = \"" + temp->credits + "\" $?\n";
+            finalText += "\t\t¿item Edad = \"" + temp->age + "\" $?\n";
+            finalText += "\t¿$element\n";
             temp = temp->next;
+            
         } while(temp != first);
-        cout << "--- final ---\n";
+        return finalText;
     } else{
         cout << "Lista vacia" << endl;
     }
+    return "empty string";
 }
 
 //------------------------------------------------------------- PRINT ERRORS
