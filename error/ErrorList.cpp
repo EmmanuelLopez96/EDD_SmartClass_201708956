@@ -13,6 +13,8 @@ class ErrorList{
         ErrorNode *first;
         ErrorNode *last;
 
+        int size = 0;
+
         void insert(string, string);
         void printErrors();
 };
@@ -29,10 +31,12 @@ void ErrorList::insert(string type, string description){
         this->first = newNode;
         this->last = newNode;
         first->next = NULL;
+        newNode->id = to_string(size++);
     } else {
         this->last->next = newNode;
         newNode->next = NULL;
         this->last = newNode;
+        newNode->id = to_string(size++);
     }
 }
 

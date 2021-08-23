@@ -6,6 +6,7 @@
 
 using namespace std;
 
+int counting = 0;
 template <typename T>
 class StudentGraph{
     private:
@@ -25,6 +26,7 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
     string acum = "digraph G{\n rankdir = LR; \nnode [shape=box]; \ncompound=true; \n";
     string nodo = "";
     string enlace = "";
+    counting++; 
 
     StudentNode<T> *tmp = gcdll->first;
     while(tmp->next != gcdll->first){
@@ -48,7 +50,7 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
     enlace += "\"" +  nextLink + "\" -> \"" + currLink + "\"[dir=\"left\"];\n";
     acum += nodo + enlace + "\n}\n";
 
-    string filename("students.dot");
+    string filename("students" + to_string(counting) + ".dot");
     fstream file_out;
 
     file_out.open(filename, std::ios_base::out);
@@ -59,7 +61,7 @@ void StudentGraph<T>::generateGraph(StudentList<T> *gcdll){
         cout << "\t\t\t\t\t    nota - Grafo de estudiantes creado correctamente" << endl;
     }
 
-    string cmd = "dot -Tsvg students.dot -o students.svg";
+    string cmd = "dot -Tsvg students" + to_string(counting) + ".dot -o students" + to_string(counting) + ".svg";
     system(cmd.c_str());    
 }
 
