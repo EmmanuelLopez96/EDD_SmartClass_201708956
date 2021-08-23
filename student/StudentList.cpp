@@ -8,7 +8,8 @@
 #include <clocale>
 
 #include "./StudentNode.cpp"
-#include "../error/ErrorList.cpp"
+#include "../graph/ErrorGraph.cpp"
+//#include "../error/ErrorList.cpp"
 
 template <typename T>
 class StudentList{
@@ -25,6 +26,7 @@ class StudentList{
         void printErrors();
         void print();
         bool verifyEmail(const string& email);
+        ErrorList *errorGraph();
         StudentNode<T>* searchStudent(string _dpi); 
         StudentNode<T>* searchByCarne(string _carne);
         
@@ -72,7 +74,6 @@ void StudentList<T>::addStudent(T _carne, T _dpi, T _name, T _career, T _passwor
             errorText += "Email no cumple con la expresion regular. ";
         }
         errorList->insert("Estudiante", errorText);
-        //cout << "\t\t\t\t\t    error - " << errorText << endl;
     } else{
         if(this->first == NULL){
             this->first = newNode;
@@ -129,7 +130,6 @@ StudentNode<T>* StudentList<T>::searchByCarne(string _carne){
     return NULL;    
 }
 
-
 //------------------------------------------------------------- DELETE STUDENT
 
 template <typename T>
@@ -185,6 +185,11 @@ void StudentList<T>::print(){
 template <typename T>
 void StudentList<T>::printErrors(){
     errorList->printErrors();   
+}
+
+template <typename T>
+ErrorList* StudentList<T>::errorGraph(){
+    return errorList;
 }
 
 #endif 

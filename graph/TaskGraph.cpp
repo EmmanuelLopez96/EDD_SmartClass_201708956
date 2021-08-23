@@ -6,6 +6,7 @@
 
 using namespace std;
 
+int counter = 0;
 template <typename T>
 class TaskGraph{
     private:
@@ -32,6 +33,7 @@ void TaskGraph<T>::generateGraph(TaskList<T> *gtkl){
     string acum = "digraph G{\n rankdir = LR; \nnode [shape=box]; \ncompound=true; \n";
     string nodo = "";
     string enlace = "";
+    counter++;
 
     TaskNode<T> *temp = gtkl->first;
     while(temp->next != NULL){
@@ -59,7 +61,7 @@ void TaskGraph<T>::generateGraph(TaskList<T> *gtkl){
     }
     acum += nodo + enlace + "\n}\n";
     
-    string filename("tasks.dot");
+    string filename("tasks" + to_string(counter) + ".dot");
     fstream file_out;
 
     file_out.open(filename, std::ios_base::out);
@@ -70,7 +72,7 @@ void TaskGraph<T>::generateGraph(TaskList<T> *gtkl){
         cout << "\t\t\t\t\t    nota - Grafo de tareas creado correctamente" << endl;
     }
 
-    string cmd = "dot -Tsvg tasks.dot -o tasks.svg";
+    string cmd = "dot -Tsvg tasks" + to_string(counter) + ".dot -o tasks" + to_string(counter) + ".svg";
     system(cmd.c_str());
 }
 

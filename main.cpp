@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <fstream>
 
-#include "./student/StudentList.cpp"
+//#include "./student/StudentList.cpp"
 #include "./graph/StudentGraph.cpp"
 #include "./graph/TaskGraph.cpp"
 
@@ -19,6 +19,7 @@ StudentList<string> *cdll;
 StudentGraph<string> *sg;
 TaskList<string> *tkl;
 TaskGraph<string> *tg;
+ErrorGraph *errg;
 
 //------------------------------------------------------------------------------------- HOMEWORK
 //------------------------------------------------------------- READ HOMEWORK FILE
@@ -407,14 +408,18 @@ void insertStudent(){
 void showReports(){
     int option;
 
+
     do{
         cout << "\n\n\n********************************************" << endl;
         cout << "***************** Reportes *****************" << endl;
         cout << "********************************************" << endl;
         cout << "1. Lista de estudiantes" << endl;
-        cout << "2. Linealizacion de tareas" << endl;
+        cout << "2. Lista de tareas" << endl;
         cout << "3. Lista de errores" << endl;
-        cout << "4. Regresar" << endl;   
+        cout << "4. Busqueda de tarea (linealizacion)" << endl;
+        cout << "5. Calcular posicion en lista" << endl;
+        cout << "6. Generar codigo de salida" << endl;
+        cout << "7. Regresar" << endl;   
         cout << "********************************************" << endl;
         cout << "Ingresa la opcion deseada: ";
         cin >> option;
@@ -428,15 +433,88 @@ void showReports(){
             tg->generateGraph(&*tkl);
             break;
         case 3:
-            cdll->printErrors();
+            errg->generateGraph(&*cdll->errorGraph());
             break;
-        case 4:
+        case 4:{
+            int mes, dia, hora;
+            do{
+                cout << "Ingresa el mes (7 - 11): ";
+                cin >> mes;
+                if(mes < 7 || mes > 11){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar un mes valido" << endl;
+                }
+            } while(mes < 7 || mes > 11);
+            do{
+                cout << "Ingresa el dia (1 - 30): ";
+                cin >> dia;
+                if(dia < 1 || dia > 30){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar un dia valido" << endl;
+                } 
+            } while(dia < 1 || dia > 30);
+            do{
+                cout << "Ingresa la hora (8 - 16): ";
+                cin >> hora;
+                if(hora < 8 || hora > 16){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar una hora valida" << endl;
+                } 
+            } while(hora < 8 || hora > 16);
+
+            int linear = ((hora-8) * 30 + (dia-1)) * 5 + (mes-7);
+            
+            TaskNode<string> *show = tkl->modifyTest(to_string(linear));
+            if(show != NULL){
+                cout << "Fecha: " << show->date << endl;
+                cout << "Carnet: " << show->carne << endl;
+                cout << "Nombre: " << show->name << endl;
+                cout << "Estado: " << show->state << endl;
+                cout << "Materia: " << show->course << endl;
+                cout << "Descripcion: " << show->description << endl;
+            } else{
+                cout << "\t\t\t\t\t    error - No hay tarea almacenada en esta fecha" << endl;
+            }
+        }
+            break;
+        case 5:{
+            int mes, dia, hora;
+            do{
+                cout << "Ingresa el mes (7 - 11): ";
+                cin >> mes;
+                if(mes < 7 || mes > 11){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar un mes valido" << endl;
+                }
+            } while(mes < 7 || mes > 11);
+            do{
+                cout << "Ingresa el dia (1 - 30): ";
+                cin >> dia;
+                if(dia < 1 || dia > 30){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar un dia valido" << endl;
+                } 
+            } while(dia < 1 || dia > 30);
+            do{
+                cout << "Ingresa la hora (8 - 16): ";
+                cin >> hora;
+                if(hora < 8 || hora > 16){
+                    cout << "\t\t\t\t\t    error - Debes de ingresar una hora valida" << endl;
+                } 
+            } while(hora < 8 || hora > 16);
+
+            int linear = ((hora-8) * 30 + (dia-1)) * 5 + (mes-7);
+
+            cout << "\nrow-major -> (hora * 30 + dia) * 5 + mes" << endl;
+            cout << "row-major -> ((" << hora << "-8) * 30 + (" << dia << "-1)) * 5 + (" << mes << "-7)" << endl;
+            cout << "row-major -> " << linear << endl;
+        }
+            break;
+        case 6:
+                cout << "codigo de salida";
+                break;
+        case 7:
             break;
         default:
             cout << "\t\t\t\t\t    error - Opcion no existente" << endl;
             break;
         }        
-    } while(option != 4);
+    } while(option != 7);
 }
 
 //------------------------------------------------------------- EDIT INFORMATION MENU

@@ -12,7 +12,7 @@ class ErrorNode {
         ErrorNode(string, string);
         ~ErrorNode();
 
-        int id;
+        string id;
         string type;
         string description;
         
@@ -20,7 +20,7 @@ class ErrorNode {
 };
 
 ErrorNode::ErrorNode(string _type, string _description){
-    this->id = ++cont;
+    this->id;
     this->type = _type;
     this->description = _description;
 
