@@ -94,6 +94,7 @@ void readHomework(string path){
                 errorText += "Dia fuera del rango establecido. ";
             }
             errorList->insert("Tarea", errorText);
+            cout << "\t\t\t\t\t    error - " << errorText << endl;            
         } else{
             hw[stoi(hour)-8][stoi(day)-1][stoi(month)-7] = new TaskNode<string>(month, day, hour, carne, name, description, course, date, state, "0");
         }
@@ -103,8 +104,8 @@ void readHomework(string path){
 
     for(int i=0; i<rows; i++){
         for(int j=0; j<cols; j++){
-            for(int k=0; k<depth; k++){
-                int position = (i * cols + j) * depth + k;
+            for(int k=0; k<depth; k++){                
+                int position = (j * rows + i) * depth + k;
                 vector[position] = hw[i][j][k];
             }
         }

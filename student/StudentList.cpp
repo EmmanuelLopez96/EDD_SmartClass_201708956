@@ -74,6 +74,7 @@ void StudentList<T>::addStudent(T _carne, T _dpi, T _name, T _career, T _passwor
             errorText += "Email no cumple con la expresion regular. ";
         }
         errorList->insert("Estudiante", errorText);
+        cout << "\t\t\t\t\t    error - " << errorText << endl;
     } else{
         if(this->first == NULL){
             this->first = newNode;
